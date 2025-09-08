@@ -2,20 +2,26 @@
   "name": "task3",
   "version": "1.0.0",
   "main": "index.js",
+   "homepage": "https://pjj5588-arch.github.io/task3",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm-run-all --parallel watch docs-serve",
     "watch": "echo 'Watching files...' && exit 0",
-    "docs-serve": "astro dev"
+     "build": "react-scripts build",
+    "docs-serve": "astro dev",
+     "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
+    "chokidar-cli": "^3.0.0",
     "concurrently": "^9.2.1",
-    "chokidar-cli": "^3.0.0"
+    "gh-pages": "^6.3.0",
+    "npm-run-all": "^4.1.5"
   },
   "dependencies": {
     "astro": "^5.13.5",
