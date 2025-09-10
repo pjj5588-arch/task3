@@ -12,8 +12,9 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 // 초기 데이터 (localStorage에 있으면 불러오기)
 let patients = JSON.parse(localStorage.getItem("patients")) || [
-  { name: "김철수", phone: "010-1234-5678", dob: "1985-05-01", record: "내과 진료" },
-  { name: "이영희", phone: "010-8765-4321", dob: "1990-09-12", record: "외과 진료" }
+  { name: "이상혁", phone: "010-1234-5678", dob: "1996-05-07", record: "안과 진료" },
+  { name: "Cristiano Ronaldo", phone: "010-7777-7777", dob: "1985-02-05", record: "정신과 진료" },
+  { name: "손흥민", phone: "010-3678-1238", dob: "1992-07-08", record: "정형외과 진료" }
 ];
 
 const patientTable = document.getElementById("patientTable").querySelector("tbody");

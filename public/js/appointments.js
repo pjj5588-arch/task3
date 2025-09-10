@@ -12,7 +12,27 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 let storedAppointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
-const defaultAppointments = [
+const defaultAppointments = [ {
+    name: "장원영",
+    date: "2004-08-31",
+    time: "10:00",
+    dept: "내과",
+    status: "예약 완료"
+  },
+  {
+    name: "카리나",
+    date: "2000-04-12",
+    time: "14:30",
+    dept: "외과",
+    status: "예약 완료"
+  },
+  {
+    name: "설윤",
+    date: "2004-01-26",
+    time: "09:00",
+    dept: "피부과",
+    status: "예약 완료"
+  }
 ];
 
 // 기본 데이터 중 없으면 추가
