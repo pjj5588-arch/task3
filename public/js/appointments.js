@@ -13,8 +13,6 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 let storedAppointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
 const defaultAppointments = [
-  { name: "김철수", date: "2025-09-10", time: "10:00", dept: "내과", status: "예약 완료" },
-  { name: "이영희", date: "2025-09-10", time: "11:00", dept: "외과", status: "예약 완료" }
 ];
 
 // 기본 데이터 중 없으면 추가

@@ -13,3 +13,32 @@ body {
 h5 {
   font-weight: 600;
 }
+
+.staff-card {
+  position: relative; /* 삭제 버튼 절대 위치 기준 */
+  padding: 10px 15px;
+  background-color: #f0f8ff;
+  border: 1px solid #888;
+  border-radius: 8px;
+  cursor: grab;
+  min-width: 120px;
+  text-align: left; /* 버튼을 오른쪽 구석에 놓기 위해 왼쪽 정렬 */
+   word-break: break-word;
+}
+
+.staff-card .deleteBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+   z-index: 10;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  margin: 0; /* Bootstrap margin 제거 */
+}
+
+#staffCards {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄로 배치 가능 */
+  gap: 10px;       /* 카드 간 간격 */
+}
+
