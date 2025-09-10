@@ -6,19 +6,37 @@
   <title>병원 관리자 대시보드</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .card { border-radius: 0.75rem; cursor: pointer; }
+    .card h5 { font-weight: 600; }
+    .list-group-item { border: none; padding: 0.5rem 0; }
+    .dashboard-grid { row-gap: 1.5rem; display: flex; flex-wrap: wrap; }
+    .dashboard-grid > .col-md-4, .dashboard-grid > .col-md-6, .dashboard-grid > .col-12 { display: flex; }
+    .dashboard-grid > .col-md-4 > .card,
+    .dashboard-grid > .col-md-6 > .card,
+    .dashboard-grid > .col-12 > .card { flex: 1; }
+  </style>
 </head>
-<body class="bg-light" style="font-family: 'Inter', sans-serif;">
+<body class="bg-light">
 
-  <!-- 상단 네비게이션 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- 네비게이션 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">병원 관리자</a>
-      <div class="collapse navbar-collapse">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="dashboard.html">대시보드</a></li>
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">대시보드</a></li>
           <li class="nav-item"><a class="nav-link" href="patients.html">환자 관리</a></li>
           <li class="nav-item"><a class="nav-link" href="appointments.html">예약 관리</a></li>
+          <li class="nav-item"><a class="nav-link" href="stats.html">통계 관리</a></li>
+          <li class="nav-item"><a class="nav-link" href="partners.html">협력병원</a></li>
+          <li class="nav-item"><a class="nav-link" href="hospitalmap.html">3차병원 지도</a></li>
           <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">로그아웃</a></li>
         </ul>
       </div>
@@ -27,24 +45,47 @@
 
   <!-- 대시보드 콘텐츠 -->
   <div class="container mt-4">
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
+
+    <!-- 1행 -->
+    <div class="row dashboard-grid">
+      <div class="col-md-4">
         <div class="card shadow-sm p-3">
-          <h5>오늘 예약 현황</h5>
+          <h5>예약 현황</h5>
           <ul class="list-group list-group-flush mt-2">
             <li class="list-group-item">김철수 - 10:00 - 내과</li>
             <li class="list-group-item">이영희 - 11:00 - 외과</li>
           </ul>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
+      <div class="col-md-4">
+  <div class="card shadow-sm p-3">
+     <h5>오늘 환자 현황</h5>
+    <p class="mt-2 mb-1">오늘 방문 환자: <strong>20명</strong></p>
+    <p>오늘 신규 등록 환자: <strong>5명</strong></p>
+  </div>
+</div>
+      <div class="col-md-4">
         <div class="card shadow-sm p-3">
           <h5>환자 통계</h5>
-          <p class="mt-2 mb-1">오늘 방문 환자 수: <strong>20명</strong></p>
-          <p>이번 주 예약 수: <strong>120명</strong></p>
+          <p class="mt-2 mb-1">이번 주 예약 수: <strong>120명</strong></p>
+          <p>이번 달 예약 수: <strong>450명</strong></p>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
+    </div>
+
+    <!-- 2행: 예약 통계 차트 -->
+    <div class="row dashboard-grid mt-3">
+      <div class="col-12">
+        <div class="card shadow-sm p-3">
+          <h5>예약 통계</h5>
+          <div id="appointmentsChart" style="height:300px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3행 -->
+    <div class="row dashboard-grid mt-3">
+      <div class="col-md-4">
         <div class="card shadow-sm p-3">
           <h5>공지사항</h5>
           <ul class="list-group list-group-flush mt-2">
@@ -53,22 +94,171 @@
           </ul>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>매출 현황</h5>
+          <p class="mt-2 mb-1">오늘 매출: <strong>₩1,200,000</strong></p>
+          <p>이번 주 매출: <strong>₩8,500,000</strong></p>
+          <p>이번 달 매출: <strong>₩35,000,000</strong></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>진료과별 예약 비율</h5>
+          <div id="departmentChart" style="height:250px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4행 -->
+    <div class="row dashboard-grid mt-3">
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>최근 예약</h5>
+          <ul class="list-group list-group-flush mt-2">
+            <li class="list-group-item">박민수 - 14:00 - 내과</li>
+            <li class="list-group-item">최지은 - 14:30 - 외과</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>직원 근무 현황</h5>
+          <ul class="list-group list-group-flush mt-2">
+            <li class="list-group-item">김간호 - 근무 중</li>
+            <li class="list-group-item">이수진 - 휴무</li>
+            <li class="list-group-item">박원장 - 근무 중</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>응급 / 취소 / 연기</h5>
+          <p class="mt-2 mb-1">오늘 응급 환자: <strong>3명</strong></p>
+          <p>오늘 예약 취소: <strong>2건</strong></p>
+          <p>오늘 예약 연기: <strong>1건</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5행 -->
+    <div class="row dashboard-grid mt-3">
+      <div class="col-12">
+        <div class="card shadow-sm p-3">
+          <h5>환자 방문 추세</h5>
+          <div id="patientTrendChart" style="height:300px;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 모달 -->
+  <div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">예약 상세 정보</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // 로그인 확인
-    if(sessionStorage.getItem("isLoggedIn") !== "true") {
-      alert("로그인이 필요합니다.");
-      window.location.href = "index.html";
+    function checkLogin() {
+      if (sessionStorage.getItem("isLoggedIn") !== "true") {
+        alert("로그인이 필요합니다.");
+        window.location.href = "index.html";
+      }
     }
 
-    // 로그아웃
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      sessionStorage.removeItem("isLoggedIn");
-      window.location.href = "index.html";
-    });
-  </script>
+    // 로그아웃 버튼
+    function setupLogout() {
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          sessionStorage.removeItem("isLoggedIn");
+          window.location.href = "index.html";
+        });
+      }
+    }
 
+    // 예약 통계 혼합 차트
+    function renderAppointmentsChart() {
+      const chartDiv = document.querySelector("#appointmentsChart");
+      if (!chartDiv) return;
+
+      const options = {
+        chart: { 
+          height: 300, 
+          type: 'line', 
+          stacked: false,
+          events: {
+            dataPointSelection: function(event, chartContext, config) {
+              const day = config.w.config.xaxis.categories[config.dataPointIndex];
+              const value = config.w.config.series[config.seriesIndex].data[config.dataPointIndex];
+            }
+          }
+        },
+        series: [
+          { name: '요일별 예약 수', type: 'column', data: [5,10,15,7,12,8,20] },
+          { name: '누적 예약 수', type: 'line', data: [5,15,30,37,49,57,77] }
+        ],
+        stroke: { width: [0, 3], curve: 'smooth' },
+        xaxis: { categories: ['월','화','수','목','금','토','일'] },
+        yaxis: [
+          { title: { text: '예약 수' } },
+          { opposite: true, title: { text: '누적 예약 수' } }
+        ],
+        colors: ['#0d6efd','#198754'],
+        dataLabels: { enabled: false },
+        tooltip: { shared: true }
+      };
+
+      new ApexCharts(chartDiv, options).render();
+    }
+
+
+    // 진료과별 예약 비율
+    function renderDeptChart() {
+      var deptOptions = {
+        chart: { type: 'pie', height: 250 },
+        series: [40, 25, 15, 20],
+        labels: ['내과', '외과', '소아과', '치과'],
+        colors: ['#0d6efd', '#198754', '#ffc107', '#dc3545']
+      };
+      new ApexCharts(document.querySelector("#departmentChart"), deptOptions).render();
+    }
+
+    // 환자 방문 추세
+    function renderTrendChart() {
+      var trendOptions = {
+        chart: { type: 'line', height: 300 },
+        series: [{ name: '환자 수', data: [20, 25, 18, 30, 40, 35, 50] }],
+        xaxis: { categories: ['월','화','수','목','금','토','일'] },
+        colors: ['#198754'],
+        dataLabels: { enabled: false },
+        grid: { borderColor: '#e0e0e0' },
+        tooltip: { theme: 'light' }
+      };
+      new ApexCharts(document.querySelector("#patientTrendChart"), trendOptions).render();
+    }
+
+    // 초기화
+    function initDashboard() {
+      checkLogin();
+      setupLogout();
+      renderAppointmentsChart();
+      renderDeptChart();
+      renderTrendChart();
+    }
+
+    document.addEventListener("DOMContentLoaded", initDashboard);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

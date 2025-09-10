@@ -6,7 +6,6 @@
   <title>병원 관리자 로그인</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-light d-flex align-items-center" style="height:100vh; font-family: 'Inter', sans-serif;">
 
@@ -17,10 +16,10 @@
           <h3 class="text-center mb-4">병원 관리자 로그인</h3>
           <form id="loginForm">
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="아이디" id="username" required>
+              <input type="text" class="form-control" placeholder="아이디" id="username" value="admin" required>
             </div>
             <div class="mb-3">
-              <input type="password" class="form-control" placeholder="비밀번호" id="password" required>
+              <input type="password" class="form-control" placeholder="비밀번호" id="password" value="1234" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">로그인</button>
           </form>
@@ -45,5 +44,6 @@
       }
     });
   </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

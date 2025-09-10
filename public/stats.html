@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>통계 관리 - 관리자</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body class="bg-light" style="font-family: 'Inter', sans-serif;">
+
+  <!-- 네비게이션 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="dashboard.html">병원 관리자</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html">대시보드</a></li>
+          <li class="nav-item"><a class="nav-link" href="patients.html">환자 관리</a></li>
+          <li class="nav-item"><a class="nav-link" href="appointments.html">예약 관리</a></li>
+          <li class="nav-item"><a class="nav-link active" href="stats.html">통계 관리</a></li>
+          <li class="nav-item"><a class="nav-link" href="partners.html">협력병원</a></li>
+          <li class="nav-item"><a class="nav-link" href="hospitalmap.html">3차병원 지도</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">로그아웃</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 콘텐츠 -->
+  <div class="container my-4">
+    <h3 class="mb-4">📊 통계 관리</h3>
+    <div class="row g-4">
+      <!-- 질병 Top 5 -->
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">다빈도 질병 Top 5</h5>
+            <div id="diseaseChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 의약품 Top 5 -->
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">다빈도 의약품 Top 5</h5>
+            <div id="drugChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 검진 항목 수검률 -->
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">검진 항목별 수검률</h5>
+            <div id="checkupChart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 스크립트 -->
+  <script src="dashboard.js"></script>
+  <script>
+    // 질병 Top 5
+    new ApexCharts(document.querySelector("#diseaseChart"), {
+      chart: { type: 'bar', height: 300 },
+      series: [{ name: '환자 수', data: [120, 95, 80, 65, 50] }],
+      xaxis: { categories: ['고혈압', '당뇨병', '감기', '천식', '위염'] },
+      colors: ['#0d6efd']
+    }).render();
+
+    // 의약품 Top 5
+    new ApexCharts(document.querySelector("#drugChart"), {
+      chart: { type: 'line', height: 300 },
+      series: [
+        { name: '처방 수량', type: 'column', data: [300, 250, 200, 150, 120] },
+        { name: '누적 처방량', type: 'line', data: [300, 550, 750, 900, 1020] }
+      ],
+      xaxis: { categories: ['타이레놀', '메트포르민', '로사르탄', '오메프라졸', '아목시실린'] },
+      colors: ['#198754','#0d6efd']
+    }).render();
+
+    // 검진 항목 수검률
+    new ApexCharts(document.querySelector("#checkupChart"), {
+      chart: { type: 'donut', height: 320 },
+      series: [70, 55, 40, 30],
+      labels: ['혈압 검사', '혈당 검사', 'X-ray', '내시경'],
+      colors: ['#0d6efd','#198754','#ffc107','#dc3545']
+    }).render();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
