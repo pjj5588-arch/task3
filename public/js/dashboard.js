@@ -29,12 +29,6 @@ function renderAppointmentsChart() {
       height: 300, 
       type: 'line', 
       stacked: false,
-      events: {
-        dataPointSelection: function(event, chartContext, config) {
-          const day = config.w.config.xaxis.categories[config.dataPointIndex];
-          const value = config.w.config.series[config.seriesIndex].data[config.dataPointIndex];
-        }
-      }
     },
     series: [
       { name: '요일별 예약 수', type: 'column', data: [5,10,15,7,12,8,20] },
